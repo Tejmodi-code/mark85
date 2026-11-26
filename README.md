@@ -1,43 +1,39 @@
-# Tej Money
+# Stake Clone - Frontend UI
 
-Play-coin gaming website with account registration, wallet history, provably fair games, live Blackjack, live Crash and room chat. Coins have no cash value; the product does not accept deposits or withdrawals.
+A responsive dark-mode glass UI for a Stake-inspired online gaming platform.
 
-## What is included
+## Features
 
-- `web/`: responsive browser UI, account screens, avatar selection, live tables and chat.
-- `server/`: FastAPI API, account/session data, wallet ledger, solo games and live-table service.
-- `engine/`: stateless Rust outcome engine.
-- `deploy/`: Docker build files, Nginx routing, Caddy-managed HTTPS and smoke/load checks.
-- `docs/DEPLOY.md`: Linux deployment instructions.
-- `docs/SCALING.md`: architecture limits and a measured-load plan. No throughput claim is made without a run on the target server.
+- **Responsive Lobby & Game Catalog**: Fast navigation between games, wallet, and profile.
+- **Interactive Games**:
+  - **Crash**: Rocket trajectory canvas, multiplier graph, auto-pilot controls, and live bet feeds.
+  - **Live Blackjack**: 5-seat multiplayer card table layout with chip wagering and hand actions.
+  - **Roulette**: European roulette betting grid, wheel simulation, and chip selection.
+  - **Mines**: Customizable grid minesweeper game with cashout multipliers.
+  - **Plinko**: Physics-style peg board with multi-row multipliers.
+  - **Hi-Lo & Dice**: Dynamic probability slider and cards.
+- **Glassmorphic Dark Theme**: Modern Stake-style UI with glowing accents, animated balances, sound toggles, and modal dialogues.
+- **Account & Wallet Screens**: Login/Signup modal, avatar selector, transaction history, and wallet management.
 
-## Deploy on a Linux server
+## Tech Stack
 
-Use a host with Docker Compose and a public DNS name. Point the domain at the host and allow inbound TCP 80/443 (UDP 443 is optional for HTTP/3). Run:
+- **HTML5 & Vanilla JavaScript**: Zero runtime framework dependencies, lightweight and fast.
+- **CSS3 Modern Styles**: Glassmorphism, CSS variables, flexbox, and CSS grid.
+- **SVG Vector Icons**: Inline resolution-independent game and UI iconography (`icons.js`).
 
-```sh
-./deploy.sh
+## Running Locally
+
+Simply open `index.html` in any web browser, or serve it using a local static file server:
+
+```bash
+# Using Python
+python -m http.server 8000
+
+# Using Node.js npx
+npx serve .
 ```
 
-On first run, the script creates `.env` with random database and admin secrets, then stops so you can set `SITE_HOST` to your real domain. Re-run it after DNS is ready. Caddy provisions and renews the public TLS certificate. See [docs/DEPLOY.md](docs/DEPLOY.md).
+Then visit `http://localhost:8000`.
 
-## Local development
-
-Install Rust and Python 3.12+, then in separate terminals:
-
-```sh
-cd engine && cargo run --release
-cd server && pip install -r requirements.txt && uvicorn main:app --port 8000
-```
-
-Open `http://localhost:8000`. SQLite is supported for local development. Production startup requires PostgreSQL and a strong `ADMIN_KEY`.
-
-## Operations notes
-
-- Ordinary API requests are stateless and share PostgreSQL through PgBouncer. Nginx resolves Compose service addresses dynamically as replicas change.
-- Keep exactly one live-table actor. A database lease prevents a second actor from starting. Accepted live wagers are durable; unresolved stakes are refunded when that actor restarts.
-- User session tokens are hashed at rest. WebSocket credentials are sent in the first encrypted WebSocket message, not in the URL or access logs.
-- API workers and live-table actions use bounded adaptive just-in-time admission with brief queues and explicit defer/reject responses when saturated. It uses measured latency and queue depth, not an opaque model to decide game outcomes.
-- Live chat is room scoped, text-only, length limited and rate limited per account.
-- Fictional sponsor examples are not seeded in production. Set `DEMO_SPONSORS=1` only for local development.
-- Before public launch, run the target-server checks in `deploy/loadtest/README.md`; the supplied source does not certify throughput.
+## License
+MIT License

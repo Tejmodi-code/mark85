@@ -1,7 +1,0 @@
-fastapi>=0.110
-uvicorn[standard]>=0.29
-gunicorn>=22
-sqlalchemy>=2
-httpx>=0.27
-psycopg2-binary>=2.9
-uvicorn-worker>=0.4,<1
