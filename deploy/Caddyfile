@@ -1,0 +1,5 @@
+{$SITE_HOST:localhost} {
+    encode zstd gzip
+    header Strict-Transport-Security "max-age=31536000; includeSubDomains" always
+    reverse_proxy nginx:8080
+}

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Tej Money. Provably fair games played with play coins. No deposits, no withdrawals.">
+<meta name="theme-color" content="#0b2344">
+<title>Tej Money</title>
+<link rel="stylesheet" href="style.css?v=20261027-3">
+</head>
+<body>
+
+<div class="top" id="top">
+  <header class="nav">
+    <button class="icon-btn burger" id="burger" aria-label="Open menu"></button>
+    <a class="logo" href="/">Tej Money</a>
+    <nav class="links" id="seg" aria-label="Sections">
+      <button class="on" data-v="lobby">Games</button>
+      <button data-v="wallet">Wallet</button>
+      <button data-v="profile">Profile</button>
+    </nav>
+    <div class="guest" id="guest">
+      <button class="btn quiet" id="lg">Log in</button>
+      <button class="btn" id="sg">Sign up</button>
+    </div>
+    <div class="acct" id="acct" hidden>
+      <button class="bal" id="bal" aria-label="Open wallet"><span id="balv">0</span><small>coins</small></button>
+      <button class="av" id="av" aria-label="Account menu" aria-haspopup="true"></button>
+      <div class="menu" id="menu" hidden>
+        <div class="mhead"><b id="mname"></b><small id="mmail"></small></div>
+        <dl class="mmoney" id="mmoney"></dl>
+        <button id="m-wal">Wallet</button>
+        <button id="m-prof">Profile and bet history</button>
+        <button id="m-top">Daily top-up</button>
+        <button id="m-out" class="danger">Sign out</button>
+      </div>
+    </div>
+  </header>
+  <div class="spons" aria-label="Sponsors">
+    <span class="s-label">Sponsored</span>
+    <div class="s-view"><div class="s-row" id="srow"></div></div>
+  </div>
+</div>
+
+<div class="sscrim" id="sscrim"></div>
+
+<div class="shell">
+  <aside class="side" id="side" aria-label="Menu">
+    <div class="sgroup">
+      <button class="sb on" data-v="lobby"></button>
+      <button class="sb" data-v="wallet"></button>
+      <button class="sb" data-v="profile"></button>
+    </div>
+    <div class="sgroup"><h6>Classics</h6><div id="sg-classic"></div></div>
+    <div class="sgroup"><h6>Live tables <i class="dot"></i></h6><div id="sg-live"></div></div>
+    <div class="sgroup"><h6>Originals</h6><div id="sg-orig"></div></div>
+    <div class="sgroup"><h6>Account</h6>
+      <button class="sb" id="sb-top"></button>
+      <button class="sb" id="sb-fair"></button>
+    </div>
+    <p class="sfoot">Play coins only. No deposits, no withdrawals, no cash value.</p>
+  </aside>
+
+  <main>
+    <section id="v-lobby">
+      <h1>Games</h1>
+      <p class="lede">Every result comes from a seed you can check afterwards. Play coins only.</p>
+      <div class="notice" id="cta">
+        <div><b>10,000 play coins on sign up</b><span>Create an account to play and keep your history.</span></div>
+        <button class="btn" id="sg2">Create account</button>
+      </div>
+      <div id="tiles"></div>
+      <div class="card sheet" id="sheet" hidden></div>
+    </section>
+
+    <section id="v-wallet" hidden>
+      <h1>Wallet</h1>
+      <p class="lede">Every coin you received, where it went, and what is on a table right now.</p>
+      <div class="stats" id="wstats"></div>
+      <div class="card"><h3>Result per day</h3><div id="wchart"></div></div>
+      <div class="card"><h3>Where your coins went</h3><div id="wgames"></div></div>
+      <div class="card"><h3>Coins received</h3><div class="scroll"><table id="wled"></table></div><p class="mute" id="wrec"></p></div>
+    </section>
+
+    <section id="v-profile" hidden>
+      <h1 id="pn">Profile</h1>
+      <div class="stats" id="stats"></div>
+      <div class="card"><h3>Table avatar</h3><p class="mute">Choose how other players see you at live tables.</p><select id="avatar" aria-label="Table avatar"><option value="fox">🦊 Fox</option><option value="owl">🦉 Owl</option><option value="cat">🐱 Cat</option><option value="bear">🐻 Bear</option><option value="panda">🐼 Panda</option><option value="rabbit">🐰 Rabbit</option><option value="tiger">🐯 Tiger</option><option value="koala">🐨 Koala</option></select></div>
+      <div class="card"><h3>By game</h3><div class="scroll"><table id="tg"></table></div></div>
+      <div class="card"><h3>Recent bets</h3><div class="scroll"><table id="th"></table></div><p class="mute" id="rec"></p></div>
+      <div class="card"><h3>Provably fair</h3>
+        <p class="mute">Each result is HMAC-SHA256(server seed, client seed:nonce). You see the hash before you play and the seed itself after you rotate it, so every bet can be checked.</p>
+        <p class="mono" id="fh"></p>
+        <div class="bet"><input id="cs" placeholder="New client seed (optional)" maxlength="40"><button class="btn" id="rot">Rotate seed</button></div>
+        <p class="mono" id="rv"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="scrim" id="auth" hidden>
+  <form class="card auth" id="af" novalidate>
+    <h2 id="at">Create your account</h2>
+    <div class="atabs" id="atabs"><button type="button" data-m="signup" class="on">Sign up</button><button type="button" data-m="login">Log in</button></div>
+    <input id="an" placeholder="Username" autocomplete="username" maxlength="24" required>
+    <input id="am" class="su" type="email" placeholder="Email (optional)" autocomplete="email" maxlength="120">
+    <label class="su" for="newavatar">Table avatar</label><select id="newavatar" class="su"><option value="fox">🦊 Fox</option><option value="owl">🦉 Owl</option><option value="cat">🐱 Cat</option><option value="bear">🐻 Bear</option><option value="panda">🐼 Panda</option><option value="rabbit">🐰 Rabbit</option><option value="tiger">🐯 Tiger</option><option value="koala">🐨 Koala</option></select>
+    <input id="ap" type="password" placeholder="Password (10+ characters)" autocomplete="new-password" maxlength="128" required>
+    <input id="ap2" class="su" type="password" placeholder="Confirm password" autocomplete="new-password" maxlength="128">
+    <label class="chk"><input type="checkbox" id="show"> Show password</label>
+    <label class="chk su"><input type="checkbox" id="age"> I am 18 or older and understand coins are play money with no cash value</label>
+    <p class="aerr" id="aerr" role="alert"></p>
+    <button class="btn wide" id="asub">Create account</button>
+    <button type="button" class="link" id="ax">Not now</button>
+  </form>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="icons.js?v=20261027-1"></script>
+<script src="games.js?v=20261027-3"></script>
+<script src="app.js?v=20261027-2"></script>
+</body>
+</html>
